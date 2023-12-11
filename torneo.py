@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from src.partidos import partidos
 from src.equipos import equipos
+from src.inicio import inicio
 
 st.set_page_config(page_title="Torneo Palestina Libre", page_icon=":basketball:", layout="wide", menu_items={
     'Get Help': None,
@@ -16,8 +17,9 @@ with st.sidebar:
 
 # Diccionario para mapear nombres a funciones
 page_names_to_funcs = {
-    "Inicio": equipos,
+    "Inicio": inicio,
     "Síguelo en directo": partidos,
+    "Equipos": equipos
 }
 
 # Ejecución de la función seleccionada
