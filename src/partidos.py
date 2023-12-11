@@ -32,7 +32,7 @@ def asignar_pistas(partidos):
     return resultado
 
 
-def main():
+def partidos():
     partidos = [('16:50', (4, 16)),
  ('16:50', (3, 15)),
  ('16:50', (12, 14)),
@@ -90,6 +90,3 @@ def main():
         for pista, equipos in partidos.items():
             st.write(f"{pista}: Equipo {equipos[0]} vs Equipo {equipos[1]}")
 
-
-if __name__ == "__main__":
-    main()
