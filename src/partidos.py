@@ -1,5 +1,4 @@
 import streamlit as st
-import time
 from datetime import datetime, timedelta
 from collections import defaultdict
 from src.utiles import horarios
@@ -34,36 +33,35 @@ def asignar_pistas(horarios):
 
 def mostrar_partidos():
     st.markdown("## 🏀 Programación de los Partidos 🏀")
+
+    # Obtiene la hora actual
+    hora_actual = datetime.now().time()
+
+    en_curso, siguientes = obtener_partidos_en_curso_y_siguientes(hora_actual, horarios)
+    en_curso_con_pistas = asignar_pistas(en_curso)
+    siguientes_con_pistas = asignar_pistas(siguientes)
+
     st.markdown("""
     #### ⏰ ¡No te pierdas ningún partido!
     **Permanece atento/a a esta página para seguir los horarios en tiempo real.** A continuación, se muestran los partidos que están en curso y los próximos a jugarse.
     Esta información se actualiza según los horarios planificados. 
+    Dale al botón de abajo para que se refresquen los horarios
     """)
 
-    # Actualización automática cada minuto
-    while True:
-        # Obtiene la hora actual
-        hora_actual = datetime.now().time()
+    if st.button('Actualizar Horarios'):
+        st.rerun()
 
-        en_curso, siguientes = obtener_partidos_en_curso_y_siguientes(hora_actual, horarios)
-        en_curso_con_pistas = asignar_pistas(en_curso)
-        siguientes_con_pistas = asignar_pistas(siguientes)
+    st.markdown("### 🏆 Partidos en Curso")
+    for tiempo, partidos in en_curso_con_pistas.items():
+        st.markdown(f"**{tiempo}**")
+        for pista, equipos in partidos.items():
+            st.markdown(f"- {pista}: *Equipo {equipos[0]}* vs *Equipo {equipos[1]}*")
 
-        st.markdown("### 🏆 Partidos en Curso")
-        for tiempo, partidos in en_curso_con_pistas.items():
-            st.markdown(f"**{tiempo}**")
-            for pista, equipos in partidos.items():
-                st.markdown(f"- {pista}: *Equipo {equipos[0]}* vs *Equipo {equipos[1]}*")
-
-        st.markdown("### 🕒 Próximos Partidos")
-        for tiempo, partidos in siguientes_con_pistas.items():
-            st.markdown(f"**{tiempo}**")
-            for pista, equipos in partidos.items():
-                st.markdown(f"- {pista}: *Equipo {equipos[0]}* vs *Equipo {equipos[1]}*")
-
-        # Espera 60 segundos antes de actualizar
-        time.sleep(120)
-        st.experimental_rerun()
+    st.markdown("### 🕒 Próximos Partidos")
+    for tiempo, partidos in siguientes_con_pistas.items():
+        st.markdown(f"**{tiempo}**")
+        for pista, equipos in partidos.items():
+            st.markdown(f"- {pista}: *Equipo {equipos[0]}* vs *Equipo {equipos[1]}*")
 
 # Llama a la función en tu app Streamlit
 mostrar_partidos()
