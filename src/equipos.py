@@ -32,6 +32,11 @@ def equipos():
                  {'nombre': 'Laura', 'pronombre': 'ella'},
                  {'nombre': 'Ana', 'pronombre': 'ella'}]}
 
+    st.markdown("""
+       #### 🌟🌈 Distribución de Equipos 🌈🌟
+       ---
+       """)
+
     # Campo para buscar el equipo de una persona
     nombre_busqueda = st.text_input("Introduce tu nombre para saber en qué equipo estás:")
     if nombre_busqueda:
@@ -41,10 +46,7 @@ def equipos():
         else:
             st.write("No se ha encontrado tu equipo. Por favor, revisa la página o habla con la organización.")
 
-    st.markdown("""
-    #### 🌟🌈 Distribución de Equipos 🌈🌟
-    ---
-    """)
+
 
     # Mostrar equipos usando el diccionario
     mostrar_equipos(equipos_dict)
