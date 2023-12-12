@@ -5,10 +5,10 @@ st.set_page_config(page_title="Torneo Palestina Libre", page_icon=":basketball:"
     'Report a bug': None,
     'About': None
 })
-
 from src.partidos import mostrar_partidos
 from src.equipos import equipos
 from src.inicio import inicio
+
 # Crea un menú de opciones en la barra lateral
 with st.sidebar:
     selected = option_menu("Menú del torneo", ["Inicio", "Síguelo en directo", "Equipos"],
