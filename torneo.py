@@ -12,8 +12,8 @@ st.set_page_config(page_title="Torneo Palestina Libre", page_icon=":basketball:"
 
 # Crea un menú de opciones en la barra lateral
 with st.sidebar:
-    selected = option_menu("Menú del torneo", ["Inicio", "Síguelo en directo"],
-                           icons=['house', 'camera'], menu_icon="fa-basketball", default_index=0)
+    selected = option_menu("Menú del torneo", ["Inicio", "Síguelo en directo", "Equipos"],
+                           icons=['house', 'camera', 'people'], menu_icon="fa-basketball", default_index=0)
 
 # Diccionario para mapear nombres a funciones
 page_names_to_funcs = {
