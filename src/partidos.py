@@ -47,8 +47,8 @@ def mostrar_partidos():
     st.markdown("""
     #### ⏰ ¡No te pierdas ningún partido!
     **Permanece atente a esta página para seguir los horarios en tiempo real.** 
-    A continuación, se muestran los partidos que están en curso y los próximos a jugarse.
-    Esta información se actualiza según los horarios planificados, no según lo que está sucediendo, depende de que estemos siendo puntuales. 
+    A continuación, se muestran los partidos que están en curso y los próximos a jugarse.     
+    Esta información se actualiza según los horarios planificados, no según lo que está sucediendo, depende de que estemos siendo puntuales.      
     Si ves desfase con la hora que es, pulsa el botón para que refresque :point_down:
     """)
 
