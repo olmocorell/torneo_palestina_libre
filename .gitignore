@@ -1,4 +1,4 @@
 notebooks_partidos
 .DS_Store
 .idea/
-src/__pycache__/*
+**/__pycache__/

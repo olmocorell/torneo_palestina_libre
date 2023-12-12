@@ -1,17 +1,18 @@
 import streamlit as st
 from datetime import datetime, timedelta
 from collections import defaultdict
+from src.utiles import horarios
 
-def obtener_partidos_en_curso_y_siguientes(hora_actual, partidos, duracion_partido=10):
+def obtener_partidos_en_curso_y_siguientes(hora_actual, horarios, duracion_partido=10):
     en_curso = defaultdict(list)
     siguientes = defaultdict(list)
-    tiempos_futuros = sorted({datetime.strptime(tiempo, '%H:%M').time() for tiempo, _ in partidos if
+    tiempos_futuros = sorted({datetime.strptime(tiempo, '%H:%M').time() for tiempo, _ in horarios if
                               datetime.strptime(tiempo, '%H:%M').time() > hora_actual})
 
     # Obtener los dos próximos bloques de tiempo
     proximos_bloques = tiempos_futuros[:2]
 
-    for tiempo, partido in partidos:
+    for tiempo, partido in horarios:
         hora_partido = datetime.strptime(tiempo, '%H:%M').time()
         fin_partido = (datetime.combine(datetime.today(), hora_partido) + timedelta(minutes=duracion_partido)).time()
 
@@ -22,71 +23,41 @@ def obtener_partidos_en_curso_y_siguientes(hora_actual, partidos, duracion_parti
 
     return en_curso, siguientes
 
-
-def asignar_pistas(partidos):
+def asignar_pistas(horarios):
     resultado = defaultdict(dict)
-    for tiempo, juegos in partidos.items():
+    for tiempo, juegos in horarios.items():
         for i, juego in enumerate(juegos):
             pista = i % 4 + 1  # Asigna pistas 1-4 en ciclo
             resultado[tiempo][f"Pista {pista}"] = juego
     return resultado
 
-
-def partidos():
-    partidos = [('16:50', (4, 16)),
- ('16:50', (3, 15)),
- ('16:50', (12, 14)),
- ('16:50', (9, 10)),
- ('17:01', (7, 13)),
- ('17:01', (1, 6)),
- ('17:01', (5, 11)),
- ('17:01', (2, 8)),
- ('17:12', (4, 14)),
- ('17:12', (7, 16)),
- ('17:12', (3, 9)),
- ('17:12', (2, 12)),
- ('17:23', (6, 8)),
- ('17:23', (1, 5)),
- ('17:23', (10, 15)),
- ('17:23', (11, 13)),
- ('17:34', (2, 4)),
- ('17:34', (7, 14)),
- ('17:34', (12, 16)),
- ('17:34', (1, 15)),
- ('17:45', (3, 10)),
- ('17:45', (6, 11)),
- ('17:45', (5, 13)),
- ('17:45', (8, 9)),
- ('17:56', (3, 4)),
- ('17:56', (14, 16)),
- ('17:56', (1, 7)),
- ('17:56', (9, 12)),
- ('18:07', (6, 13)),
- ('18:07', (5, 15)),
- ('18:07', (8, 11)),
- ('18:07', (2, 10)),
- ('18:18', (4, 9)),
- ('18:18', (14, 15)),
- ('18:18', (3, 12)),
- ('18:18', (1, 16))]
-    st.title("Programación de Partidos")
+def mostrar_partidos():
+    st.markdown("## 🏀 Programación de los Partidos 🏀")
 
     # Obtiene la hora actual
     hora_actual = datetime.now().time()
 
-    en_curso, siguientes = obtener_partidos_en_curso_y_siguientes(hora_actual, partidos)
+    en_curso, siguientes = obtener_partidos_en_curso_y_siguientes(hora_actual, horarios)
     en_curso_con_pistas = asignar_pistas(en_curso)
     siguientes_con_pistas = asignar_pistas(siguientes)
 
-    st.subheader("Partidos en Curso")
+    st.markdown("""
+    #### ⏰ ¡No te pierdas ningún partido!
+    **Permanece atente a esta página para seguir los horarios en tiempo real.** A continuación, se muestran los partidos que están en curso y los próximos a jugarse.
+    Esta información se actualiza según los horarios planificados. 
+    """)
+
+    st.markdown("### 🏆 Partidos en Curso")
     for tiempo, partidos in en_curso_con_pistas.items():
-        st.markdown(f"### {tiempo}")
+        st.markdown(f"**{tiempo}**")
         for pista, equipos in partidos.items():
-            st.write(f"{pista}: Equipo {equipos[0]} vs Equipo {equipos[1]}")
+            st.markdown(f"- {pista}: *Equipo {equipos[0]}* vs *Equipo {equipos[1]}*")
 
-    st.subheader("Próximos Partidos")
+    st.markdown("### 🕒 Próximos Partidos")
     for tiempo, partidos in siguientes_con_pistas.items():
-        st.markdown(f"### {tiempo}")
+        st.markdown(f"**{tiempo}**")
         for pista, equipos in partidos.items():
-            st.write(f"{pista}: Equipo {equipos[0]} vs Equipo {equipos[1]}")
+            st.markdown(f"- {pista}: *Equipo {equipos[0]}* vs *Equipo {equipos[1]}*")
 
+# Llama a la función en tu app Streamlit
+mostrar_partidos()

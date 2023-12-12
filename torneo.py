@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from src.partidos import partidos
+from src.partidos import mostrar_partidos
 from src.equipos import equipos
 from src.inicio import inicio
 
@@ -18,7 +18,7 @@ with st.sidebar:
 # Diccionario para mapear nombres a funciones
 page_names_to_funcs = {
     "Inicio": inicio,
-    "Síguelo en directo": partidos,
+    "Síguelo en directo": mostrar_partidos,
     "Equipos": equipos
 }
 
