@@ -5,7 +5,7 @@ import pytz
 
 from src.utiles import horarios
 
-@st.experimental_singleton
+@st.cache_data
 def obtener_partidos_en_curso_y_siguientes(hora_actual, horarios, duracion_partido=10):
     en_curso = defaultdict(list)
     siguientes = defaultdict(list)
@@ -46,9 +46,10 @@ def mostrar_partidos():
 
     st.markdown("""
     #### ⏰ ¡No te pierdas ningún partido!
-    **Permanece atente a esta página para seguir los horarios en tiempo real.** A continuación, se muestran los partidos que están en curso y los próximos a jugarse.
-    Esta información se actualiza según los horarios planificados en la hora de Madrid (España). 
-    Tienes que pulsar el botón de abajo :point_down:
+    **Permanece atente a esta página para seguir los horarios en tiempo real.** 
+    A continuación, se muestran los partidos que están en curso y los próximos a jugarse.
+    Esta información se actualiza según los horarios planificados, no según lo que está sucediendo, depende de que estemos siendo puntuales. 
+    Si ves desfase con la hora que es, pulsa el botón para que refresque :point_down:
     """)
 
     if st.button('Actualizar Partidos :arrows_counterclockwise:'):
